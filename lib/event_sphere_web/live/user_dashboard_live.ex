@@ -1,6 +1,7 @@
 defmodule EventSphereWeb.UserDashboardLive do
   use EventSphereWeb, :live_view
-
+  @impl true
+  def layout(_assigns), do: {EventSphereWeb.Layouts, :sidebar}
   on_mount {EventSphereWeb.UserAuth, :ensure_authenticated}
 
   def mount(_params, _session, socket) do
