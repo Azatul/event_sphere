@@ -13,6 +13,15 @@ defmodule EventSphereWeb.Router do
     plug :fetch_current_user
   end
 
+  pipeline :user_auth do
+    plug :require_authenticated_user
+  end
+
+  pipeline :admin_auth do
+    plug :require_authenticated_user
+    plug :require_authenticated_admin
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -82,4 +91,15 @@ defmodule EventSphereWeb.Router do
       live "/users/confirm", UserConfirmationInstructionsLive, :new
     end
   end
+
+  scope "/", EventSphereWeb do
+    pipe_through [:browser, :user_auth]
+    live "/dashboard", UserDashboardLive
+  end
+
+  scope "/admin", EventSphereWeb do
+    pipe_through [:browser, :admin_auth]
+    live "/dashboard", AdminDashboardLive
+  end
+
 end
