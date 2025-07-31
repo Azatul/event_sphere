@@ -6,21 +6,21 @@
         <img src={~p"/images/logo.svg"} width="36" />
       </a>
       <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
-        v{Application.spec(:phoenix, :vsn)}
+        v<%= Application.spec(:phoenix, :vsn) %>
       </p>
     </div>
 
     <!-- Right Nav -->
     <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
-      <%= if assigns[:current_user] do %>
+      <%= if @current_user do %>
+        <span><%= @current_user.email %></span>
         <%= if @current_user.role == "admin" do %>
           <.link navigate={~p"/admin/dashboard"} class="hover:text-zinc-700">Admin Dashboard</.link>
         <% else %>
           <.link navigate={~p"/dashboard"} class="hover:text-zinc-700">User Dashboard</.link>
         <% end %>
 
-        <span>|</span>
-
+        <.link navigate={~p"/users/settings"} class="hover:text-zinc-700">Settings</.link>
         <.link href={~p"/users/log_out"} method="delete" class="hover:text-zinc-700">Log out</.link>
       <% else %>
         <.link navigate={~p"/users/log_in"} class="hover:text-zinc-700">Log in</.link>
@@ -33,6 +33,6 @@
 <main class="px-4 py-20 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-2xl">
     <.flash_group flash={@flash} />
-    {@inner_content}
+    <%= @inner_content %>
   </div>
 </main>
