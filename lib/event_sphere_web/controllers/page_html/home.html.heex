@@ -1,0 +1,25 @@
+<div class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+    <source src="/videos/bg.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Dark Glassmorphism Box -->
+  <div class="relative z-10 bg-black bg-opacity-60 backdrop-blur-md p-10 rounded-3xl shadow-2xl w-full max-w-md text-center space-y-6 border border-gray-700">
+    <h1 class="text-3xl font-bold text-white">Welcome to MyEvent</h1>
+    <p class="text-gray-300">Please select your login type:</p>
+
+    <div class="space-y-4">
+      <a href={~p"/users/log_in"} class="block w-full py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition font-semibold">
+        User Login
+      </a>
+      <a href={~p"/users/register"} class="text-sm text-gray-300 hover:underline">
+        User Register
+      </a>
+      <a href={~p"/users/log_in"} class="block w-full py-3 rounded-xl bg-red-600 text-white hover:bg-red-700 transition font-semibold">
+        Admin Login
+      </a>
+    </div>
+  </div>
+</div>
