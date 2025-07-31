@@ -76,7 +76,7 @@ defmodule EventSphere.Accounts do
   """
   def register_user(attrs) do
     %User{}
-    |> User.registration_changeset(attrs)
+    |> User.registration_changeset(attrs)  # no 3rd argument here is OK (opts is optional)
     |> Repo.insert()
   end
 

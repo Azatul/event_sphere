@@ -99,7 +99,13 @@ defmodule EventSphereWeb.Router do
 
   scope "/admin", EventSphereWeb do
     pipe_through [:browser, :admin_auth]
-    live "/dashboard", AdminDashboardLive
+
+    live_session :admin_only,
+      on_mount: [{EventSphereWeb.UserAuth, :ensure_admin}] do
+
+      live "/dashboard", AdminDashboardLive
+      # Add more admin-only LiveViews here
+    end
   end
 
 end

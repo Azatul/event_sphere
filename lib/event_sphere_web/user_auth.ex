@@ -191,6 +191,21 @@ defmodule EventSphereWeb.UserAuth do
     end
   end
 
+  def on_mount(:ensure_admin, _params, session, socket) do
+    socket = mount_current_user(socket, session)
+    user = socket.assigns[:current_user]
+
+    if user && user.role == "admin" do
+      {:cont, socket}
+    else
+      {:halt,
+       socket
+       |> Phoenix.LiveView.put_flash(:error, "Admins only.")
+       |> Phoenix.LiveView.redirect(to: ~p"/")}
+    end
+  end
+
+
   defp mount_current_user(socket, session) do
     Phoenix.Component.assign_new(socket, :current_user, fn ->
       if user_token = session["user_token"] do
