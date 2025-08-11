@@ -5,12 +5,15 @@ defmodule EventSphereWeb.UserSettingsLive do
 
   def render(assigns) do
     ~H"""
-    <.header class="text-center">
+<div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6">
+  <div class="w-full max-w-2xl bg-white shadow-lg rounded-lg p-8">
+    <.header class="text-center mb-8">
       Account Settings
       <:subtitle>Manage your account email address and password settings</:subtitle>
     </.header>
 
     <div class="space-y-12 divide-y">
+      <!-- Email Change -->
       <div>
         <.simple_form
           for={@email_form}
@@ -30,10 +33,18 @@ defmodule EventSphereWeb.UserSettingsLive do
           />
           <:actions>
             <.button phx-disable-with="Changing...">Change Email</.button>
+            <.link
+              href={~p"/dashboard"}
+              class="ml-4 px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+            >
+              Cancel
+            </.link>
           </:actions>
         </.simple_form>
       </div>
-      <div>
+
+      <!-- Password Change -->
+      <div class="pt-12">
         <.simple_form
           for={@password_form}
           id="password_form"
@@ -66,12 +77,21 @@ defmodule EventSphereWeb.UserSettingsLive do
           />
           <:actions>
             <.button phx-disable-with="Changing...">Change Password</.button>
+            <.link
+              href={~p"/dashboard"}
+              class="ml-4 px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+            >
+              Cancel
+            </.link>
           </:actions>
         </.simple_form>
       </div>
     </div>
-    """
-  end
+  </div>
+</div>
+"""
+      end
+
 
   def mount(%{"token" => token}, _session, socket) do
     socket =

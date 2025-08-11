@@ -6,38 +6,55 @@ defmodule EventSphereWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">
-        Register for an account
-        <:subtitle>
-          Already registered?
-          <.link navigate={~p"/users/log_in"} class="font-semibold text-brand hover:underline">
-            Log in
+    <div class="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <!-- Background Video -->
+      <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+        <source src="/videos/bg.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <!-- SPATO Registration Card -->
+      <div class="relative z-10 bg-white rounded-lg shadow-md p-8 w-full max-w-sm">
+        <!-- Logo + Title -->
+        <div class="flex items-center justify-center mb-6 text-center">
+          <img src={~p"/images/logo-6.png"} alt="SPATO Logo" class="w-76 h-34 mr-4">
+        </div>
+
+        <!-- Registration Header -->
+        <h2 class="text-lg font-semibold text-center text-[#224179] mb-2">
+          Daftar Akaun Pengguna
+        </h2>
+        <p class="text-sm text-center text-gray-600 mb-6">
+          Sudah mempunyai akaun?
+          <.link navigate={~p"/users/log_in"} class="font-semibold text-[#224179] hover:underline">
+            Log masuk
           </.link>
-          to your account now.
-        </:subtitle>
-      </.header>
+        </p>
 
-      <.simple_form
-        for={@form}
-        id="registration_form"
-        phx-submit="save"
-        phx-change="validate"
-        phx-trigger-action={@trigger_submit}
-        action={~p"/users/log_in?_action=registered"}
-        method="post"
-      >
-        <.error :if={@check_errors}>
-          Oops, something went wrong! Please check the errors below.
-        </.error>
+        <!-- Registration Form -->
+        <.simple_form
+          for={@form}
+          id="registration_form"
+          phx-submit="save"
+          phx-change="validate"
+          phx-trigger-action={@trigger_submit}
+          action={~p"/users/log_in?_action=registered"}
+          method="post"
+        >
+          <.error :if={@check_errors}>
+            Oops, something went wrong! Please check the errors below.
+          </.error>
 
-        <.input field={@form[:email]} type="email" label="Email" required />
-        <.input field={@form[:password]} type="password" label="Password" required />
+          <.input field={@form[:email]} type="email" label="Email" required />
+          <.input field={@form[:password]} type="password" label="Kata Laluan" required />
 
-        <:actions>
-          <.button phx-disable-with="Creating account..." class="w-full">Create an account</.button>
-        </:actions>
-      </.simple_form>
+          <:actions>
+            <.button phx-disable-with="Mendaftarkan..." class="w-full bg-[#224179] hover:bg-[#19345c] text-white font-semibold py-2 rounded-md">
+              Daftar Akaun
+            </.button>
+          </:actions>
+        </.simple_form>
+      </div>
     </div>
     """
   end

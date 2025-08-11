@@ -1,38 +1,118 @@
-<header class="px-4 sm:px-6 lg:px-8">
-  <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
-    <!-- Left Logo + Version -->
-    <div class="flex items-center gap-4">
-      <a href="/">
-        <img src={~p"/images/logo.svg"} width="36" />
-      </a>
-      <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
-        v<%= Application.spec(:phoenix, :vsn) %>
-      </p>
-    </div>
+<!DOCTYPE html>
+<html lang="en" class="[scrollbar-gutter:stable]">
+<header x-data="{ mobileOpen: false, userMenuOpen: false }" class="bg-white shadow-md">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      <!-- Left: App Name -->
+      <div class="flex-shrink-0 text-xl font-bold text-blue-600">
+        EventSphere
+      </div>
 
-    <!-- Right Nav -->
-    <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
-      <%= if @current_user do %>
-        <span><%= @current_user.email %></span>
-        <%= if @current_user.role == "admin" do %>
-          <.link navigate={~p"/admin/dashboard"} class="hover:text-zinc-700">Admin Dashboard</.link>
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-6">
+        <%= if @current_user do %>
+          <!-- User Dropdown -->
+          <div 
+            class="relative"
+            @mouseenter="userMenuOpen = true"
+            @mouseleave="userMenuOpen = false"
+          >
+            <button class="flex items-center gap-2 text-sm text-gray-700 hover:text-gray-900">
+              <span><%= @current_user.email %></span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                   viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+
+            <!-- Dropdown menu -->
+            <div 
+              x-show="userMenuOpen"
+              x-transition
+              class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-20"
+            >
+              <.link
+                href={~p"/users/settings"}
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Settings
+              </.link>
+              <.link
+                href={~p"/users/log_out"}
+                method="delete"
+                class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+              >
+                Log out
+              </.link>
+            </div>
+          </div>
         <% else %>
-          <.link navigate={~p"/dashboard"} class="hover:text-zinc-700">User Dashboard</.link>
+          <.link
+            href={~p"/users/register"}
+            class="text-sm font-semibold text-gray-700 hover:text-gray-900"
+          >
+            Register
+          </.link>
+          <.link
+            href={~p"/users/log_in"}
+            class="text-sm font-semibold text-gray-700 hover:text-gray-900"
+          >
+            Log in
+          </.link>
         <% end %>
+      </nav>
 
-        <.link navigate={~p"/users/settings"} class="hover:text-zinc-700">Settings</.link>
-        <.link href={~p"/users/log_out"} method="delete" class="hover:text-zinc-700">Log out</.link>
+      <!-- Mobile burger button -->
+      <div class="md:hidden">
+        <button @click="mobileOpen = !mobileOpen" class="text-gray-700 hover:text-gray-900">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div x-show="mobileOpen" x-transition class="md:hidden border-t border-gray-200">
+    <div class="px-4 py-3 space-y-1">
+      <%= if @current_user do %>
+        <div class="text-sm font-medium text-gray-700"><%= @current_user.email %></div>
+        <.link
+          href={~p"/users/settings"}
+          class="block px-3 py-2 rounded hover:bg-gray-100 text-sm"
+        >
+          Settings
+        </.link>
+        <.link
+          href={~p"/users/log_out"}
+          method="delete"
+          class="block px-3 py-2 rounded hover:bg-gray-100 text-sm text-red-600"
+        >
+          Log out
+        </.link>
       <% else %>
-        <.link navigate={~p"/users/log_in"} class="hover:text-zinc-700">Log in</.link>
-        <.link navigate={~p"/users/register"} class="hover:text-zinc-700">Register</.link>
+        <.link
+          href={~p"/users/register"}
+          class="block px-3 py-2 rounded hover:bg-gray-100 text-sm"
+        >
+          Register
+        </.link>
+        <.link
+          href={~p"/users/log_in"}
+          class="block px-3 py-2 rounded hover:bg-gray-100 text-sm"
+        >
+          Log in
+        </.link>
       <% end %>
     </div>
   </div>
 </header>
 
-<main class="px-4 py-20 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-2xl">
-    <.flash_group flash={@flash} />
-    <%= @inner_content %>
-  </div>
-</main>
+  <body class="bg-white">
+    {@inner_content}
+  </body>
+</html>

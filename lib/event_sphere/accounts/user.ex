@@ -9,6 +9,18 @@ defmodule EventSphere.Accounts.User do
     field :current_password, :string, virtual: true, redact: true
     field :confirmed_at, :utc_datetime
     field :role, :string, default: "user"
+    field :full_name, :string
+    field :department, :string
+    field :ic_number, :string
+    field :position, :string
+    field :dob, :date
+    field :gender, :string
+    field :appointment_date, :date
+    field :job_status, :string
+    field :phone, :string
+    field :marital_status, :string
+    field :address, :string
+    field :profile_photo_url, :string
     timestamps(type: :utc_datetime)
   end
 
@@ -157,4 +169,14 @@ defmodule EventSphere.Accounts.User do
       add_error(changeset, :current_password, "is not valid")
     end
   end
+
+  def profile_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:full_name, :department, :ic_number, :position, :dob, :gender, :appointment_date, :job_status, :phone, :marital_status, :address, :profile_photo_url])
+    |> validate_required([:full_name, :department, :ic_number])
+    |> unique_constraint(:ic_number)
+  end
+
+
+
 end

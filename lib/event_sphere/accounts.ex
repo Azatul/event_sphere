@@ -10,6 +10,10 @@ defmodule EventSphere.Accounts do
 
   ## Database getters
 
+
+  def list_users do
+    Repo.all(User)
+  end
   @doc """
   Gets a user by email.
 
@@ -350,4 +354,16 @@ defmodule EventSphere.Accounts do
       {:error, :user, changeset, _} -> {:error, changeset}
     end
   end
+
+  def change_user_profile(user, attrs \\ %{}) do
+    User.profile_changeset(user, attrs)
+  end
+
+  def update_user_profile(user, attrs) do
+    user
+    |> User.profile_changeset(attrs)
+    |> Repo.update()
+  end
+
+
 end

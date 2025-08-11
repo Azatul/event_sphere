@@ -1,24 +1,23 @@
-<div class="relative min-h-screen flex items-center justify-center overflow-hidden">
-  <!-- Background Video -->
-  <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
-    <source src="/videos/bg.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
+<div class="bg-[#bcd2e4] min-h-screen flex items-center justify-center px-4">
 
-  <!-- Dark Glassmorphism Box -->
-  <div class="relative z-10 bg-white bg-opacity-60 backdrop-blur-md p-10 rounded-3xl shadow-2xl w-full max-w-md text-center space-y-6 border border-white-700">
-    <h1 class="text-3xl font-bold text-black">Welcome to MyEvent</h1>
-    <p class="text-black-300">Please select your login type:</p>
+  <!-- SPATO Login Card -->
+  <div class="relative z-10 bg-white rounded-lg shadow-md p-8 w-full max-w-sm text-center">
+    <!-- Logo + Title -->
+    <div class="flex items-center justify-center mb-6">
+      <!-- Replace with actual SPATO logo -->
+      <img src={~p"/images/logo-6.png"} alt="SPATO Logo" class="w-76 h-34 mr-4">
+    </div>
 
+    <!-- Buttons -->
     <div class="space-y-4">
-      <a href={~p"/users/log_in"} class="block w-full py-3 rounded-xl bg-pink-300 text-black hover:bg-pink-500 transition font-semibold">
-        User Login
+      <a href={~p"/users/log_in"} class="block w-full py-2 rounded-md bg-[#224179] text-white hover:bg-[#19345c] transition font-semibold">
+        Log Masuk Pengguna
       </a>
-      <a href={~p"/users/register"} class="text-sm text-black-300 hover:underline">
-        User Register
+      <a href={~p"/users/register"} class="text-sm text-[#224179] hover:underline block">
+        Daftar Pengguna
       </a>
-      <a href={~p"/users/log_in"} class="block w-full py-3 rounded-xl bg-yellow-300 text-black hover:bg-yellow-500 transition font-semibold">
-        Admin Login
+      <a href={~p"/users/log_in"} class="block w-full py-2 rounded-md bg-[#224179] text-white hover:bg-[#19345c] transition font-semibold">
+        Log Masuk Admin
       </a>
     </div>
   </div>
